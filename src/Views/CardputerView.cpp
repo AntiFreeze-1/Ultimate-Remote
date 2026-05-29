@@ -346,6 +346,194 @@ void CardputerView::displayLoading() {
 }
 
 
+void CardputerView::displayLearnInfo() {
+    Display->fillScreen(BACKGROUND_COLOR);
+    Display->drawRect(1, 1, Display->width() - 1, Display->height() - 1, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_BIG);
+    Display->setCursor(28, 18);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->printf("Learn Remote");
+
+    Display->setTextSize(TEXT_SMALL);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 44);
+    Display->printf("Record buttons from any remote");
+    Display->setCursor(18, 60);
+    Display->printf("IR receiver must be on G8 pin");
+
+    Display->setTextSize(TEXT_TINY);
+    Display->setCursor(18, 76);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->printf("OK=preset name  letter=custom");
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 90);
+    Display->printf("DEL=finish & save to SD card");
+
+    Display->fillRoundRect(70, 105, 100, 20, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setTextSize(TEXT_MEDIUM);
+    Display->setCursor(80, 115);
+    Display->printf("OK to start");
+}
+
+void CardputerView::displayLearnButtonChoice(const std::string& remoteName, int buttonCount) {
+    Display->fillScreen(BACKGROUND_COLOR);
+    Display->drawRect(1, 1, Display->width() - 1, Display->height() - 1, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_WIDE);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(10, 16);
+    Display->printf("%.14s", remoteName.c_str());
+
+    Display->setTextSize(TEXT_SMALL);
+    Display->setTextColor(TEXT_COLOR);
+
+    char countStr[32];
+    snprintf(countStr, sizeof(countStr), "%d button%s recorded", buttonCount, buttonCount == 1 ? "" : "s");
+    Display->setCursor(12, 36);
+    Display->printf(countStr);
+
+    Display->setTextSize(TEXT_TINY);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(12, 55);
+    Display->printf("Add next button:");
+
+    Display->fillRoundRect(10, 68, 82, 20, DEFAULT_ROUND_RECT, RECT_COLOR_DARK);
+    Display->drawRoundRect(10, 68, 82, 20, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setTextSize(TEXT_TINY);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(15, 78);
+    Display->printf("OK = preset list");
+
+    Display->fillRoundRect(100, 68, 82, 20, DEFAULT_ROUND_RECT, RECT_COLOR_DARK);
+    Display->drawRoundRect(100, 68, 82, 20, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setCursor(104, 78);
+    Display->printf("letter = custom");
+
+    Display->fillRoundRect(55, 96, 82, 20, DEFAULT_ROUND_RECT, RECT_COLOR_DARK);
+    Display->drawRoundRect(55, 96, 82, 20, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setCursor(60, 106);
+    Display->printf("DEL = save & exit");
+}
+
+void CardputerView::displayLearnCapturing(const std::string& buttonName) {
+    displayClearMainView(5);
+
+    Display->drawRoundRect(10, 35, Display->width() - 20, 90, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_SMALL);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 52);
+    Display->printf("Point remote at G8 & press:");
+
+    Display->setTextSize(TEXT_MEDIUM_LARGE);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(30, 75);
+    Display->printf("%.13s", buttonName.c_str());
+
+    Display->setTextSize(TEXT_TINY);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(30, 100);
+    Display->printf("Waiting for signal...");
+}
+
+void CardputerView::displayLearnCaptured(const std::string& buttonName) {
+    displayClearMainView(5);
+
+    Display->drawRoundRect(10, 35, Display->width() - 20, 90, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_WIDE);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(52, 62);
+    Display->printf("Captured!");
+
+    Display->setTextSize(TEXT_SMALL);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 85);
+    Display->printf("%.20s", buttonName.c_str());
+}
+
+void CardputerView::displayLearnTimeout() {
+    displayClearMainView(5);
+
+    Display->drawRoundRect(10, 35, Display->width() - 20, 90, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_WIDE);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(40, 58);
+    Display->printf("No signal!");
+
+    Display->setTextSize(TEXT_TINY);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 80);
+    Display->printf("Nothing received in 8 seconds");
+
+    Display->fillRoundRect(10, 97, 82, 18, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setTextSize(TEXT_TINY);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(15, 106);
+    Display->printf("< back / retry");
+
+    Display->fillRoundRect(100, 97, 82, 18, DEFAULT_ROUND_RECT, RECT_COLOR_DARK);
+    Display->drawRoundRect(100, 97, 82, 18, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setCursor(104, 106);
+    Display->printf("OK skip button");
+}
+
+void CardputerView::displayLearnSaved(const std::string& remoteName) {
+    Display->fillScreen(BACKGROUND_COLOR);
+    Display->drawRect(1, 1, Display->width() - 1, Display->height() - 1, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_BIG);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(42, 22);
+    Display->printf("Saved!");
+
+    Display->setTextSize(TEXT_SMALL);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 50);
+    Display->printf("Remote saved to SD card:");
+    Display->setTextSize(TEXT_MEDIUM_LARGE);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(18, 72);
+    Display->printf("/learned/%.10s.ir", remoteName.c_str());
+
+    Display->setTextSize(TEXT_TINY);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 96);
+    Display->printf("Use 'READ FILES' to load it");
+
+    Display->fillRoundRect(70, 108, 100, 18, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setTextSize(TEXT_MEDIUM);
+    Display->setCursor(80, 117);
+    Display->printf("OK to exit");
+}
+
+void CardputerView::displayLearnNoSd() {
+    Display->fillScreen(BACKGROUND_COLOR);
+    Display->drawRect(1, 1, Display->width() - 1, Display->height() - 1, PRIMARY_COLOR);
+
+    Display->setTextSize(TEXT_WIDE);
+    Display->setTextColor(PRIMARY_COLOR);
+    Display->setCursor(22, 28);
+    Display->printf("SD card not found");
+
+    Display->setTextSize(TEXT_SMALL);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setCursor(18, 58);
+    Display->printf("Insert SD card to save");
+    Display->setCursor(18, 76);
+    Display->printf("learned remotes as .ir files");
+
+    Display->fillRoundRect(70, 105, 100, 18, DEFAULT_ROUND_RECT, PRIMARY_COLOR);
+    Display->setTextColor(TEXT_COLOR);
+    Display->setTextSize(TEXT_MEDIUM);
+    Display->setCursor(80, 114);
+    Display->printf("OK to exit");
+}
+
 void CardputerView::drawSearchIcon(int x, int y, int size, uint16_t color) {
     int radius = size / 2;
     int handleLength = size / 2;

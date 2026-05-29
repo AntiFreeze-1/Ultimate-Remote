@@ -67,6 +67,14 @@ void GlobalContext::setIrTxPin(int irTxPin) {
     this->irTxPin = irTxPin;
 }
 
+int GlobalContext::getIrRxPin() const {
+    return irRxPin;
+}
+
+void GlobalContext::setIrRxPin(int irRxPin) {
+    this->irRxPin = irRxPin;
+}
+
 int GlobalContext::getSdCardCSPin() const {
     return sdCardCSPin;
 }

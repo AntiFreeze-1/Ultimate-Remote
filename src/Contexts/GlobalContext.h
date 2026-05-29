@@ -32,6 +32,9 @@ public:
     int getIrTxPin() const;
     void setIrTxPin(int irTxPin);
 
+    int getIrRxPin() const;
+    void setIrRxPin(int irRxPin);
+
     int getSdCardCSPin() const;
     void setSdCardCSPin(int sdCardCSPin);
 
@@ -61,6 +64,7 @@ private:
     int maxInputCharCount = 14;
     int ledPin = 21;
     int irTxPin = 44;
+    int irRxPin = 8;
     int sdCardCSPin = 12;
     int sdCardMISOPin = 39;
     int sdCardMOSIPin = 14;

@@ -44,6 +44,13 @@ public:
     static void displayConfirmationPrompt(std::string stringDescription);
     static void displayLoading();
     static void displayIrFileInfo();
+    static void displayLearnInfo();
+    static void displayLearnButtonChoice(const std::string& remoteName, int buttonCount);
+    static void displayLearnCapturing(const std::string& buttonName);
+    static void displayLearnCaptured(const std::string& buttonName);
+    static void displayLearnTimeout();
+    static void displayLearnSaved(const std::string& remoteName);
+    static void displayLearnNoSd();
 private:
     static M5GFX* Display;
     static void drawSearchIcon(int x, int y, int size, uint16_t color);

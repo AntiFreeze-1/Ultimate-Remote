@@ -9,6 +9,7 @@
 #include <Controllers/ProductController.h>
 #include <Controllers/ModeController.h>
 #include <Controllers/CommandController.h>
+#include <Controllers/LearnController.h>
 #include <Repositories/ManufacturerRepository.h>
 #include <Repositories/ProtocolRepository.h>
 #include <Repositories/RemoteRepository.h>
@@ -24,11 +25,13 @@
 #include <Selections/RemoteCommandSelection.h>
 #include <Selections/ModeSelection.h>
 #include <Selections/ProductSelection.h>
+#include <Selections/LearnSelection.h>
 #include <Services/RemoteService.h>
 #include <Services/FileService.h>
 #include <Services/SdService.h>
 #include <Services/LedService.h>
 #include <Services/InfraredService.h>
+#include <Services/IrLearnService.h>
 
 using namespace controllers;
 using namespace contexts;
@@ -63,6 +66,7 @@ private:
     ProductSelection productSelection;
     FilePathSelection filepathSelection;
     ScanSelection scanSelection;
+    LearnSelection learnSelection;
 
     // Repositories
     ManufacturerRepository manufacturerRepository;
@@ -78,6 +82,7 @@ private:
     SdService sdService;
     LedService ledService;
     InfraredService infraredService;
+    IrLearnService irLearnService;
 
     // Controllers
     ManufacturerController manufacturerController;
@@ -86,6 +91,7 @@ private:
     ProductController productController;
     CommandController commandController;
     ScanController scanController;
+    LearnController learnController;
 };
 
 } // namespace dispatchers
