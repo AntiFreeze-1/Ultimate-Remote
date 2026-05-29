@@ -25,6 +25,7 @@ public:
     std::string readFile(const char* filePath);
     bool writeFile(const char* filePath, const std::string& data);
     bool appendToFile(const char* filePath, const std::string& data);
+    bool makeDir(const char* dirPath);
 
 private:
     GlobalContext& globalContext = GlobalContext::getInstance();

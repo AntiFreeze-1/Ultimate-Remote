@@ -45,6 +45,8 @@ const std::string ModeSelection::getSelectionModeToString(SelectionModeEnum mode
             return "READ FILES";
         case SelectionModeEnum::ALL_REMOTES:
             return "ALL REMOTES";
+        case SelectionModeEnum::LEARN:
+            return "LEARN REMOTE";
         default:
             return "UNKNOWN";
     }
@@ -60,6 +62,8 @@ const std::string ModeSelection::getSelectionModeDescription(SelectionModeEnum m
             return "from sd card";
         case SelectionModeEnum::ALL_REMOTES:
             return "  available";
+        case SelectionModeEnum::LEARN:
+            return "record new remote";
         default:
             return "UNKNOWN";
     }

@@ -19,6 +19,7 @@ AppDispatcher::AppDispatcher(CardputerView& display, CardputerInput& input)
       productSelection(display, input),
       manufacturerSelection(display, input),
       scanSelection(display, input),
+      learnSelection(display, input),
       
       // Repositories
       manufacturerRepository(),
@@ -33,6 +34,7 @@ AppDispatcher::AppDispatcher(CardputerView& display, CardputerInput& input)
       fileService(protocolRepository),
       sdService(),
       infraredService(protocolRepository),
+      irLearnService(),
       
       // Controllers
       modeController(display, input, modeSelection),
@@ -47,6 +49,8 @@ AppDispatcher::AppDispatcher(CardputerView& display, CardputerInput& input)
 
       scanController(display, input, productService, remoteService, infraredService, scanSelection),
 
+      learnController(display, input, sdService, irLearnService, learnSelection),
+
       manufacturerController(manufacturerService, manufacturerSelection) { }
 
 void AppDispatcher::setup() {
@@ -57,6 +61,9 @@ void AppDispatcher::run() {
     while (true) {
         if (!selectionContext.getIsModeSelected()) {
             modeController.handleModeSelection();
+        }
+        else if (selectionContext.getCurrentSelectedMode() == SelectionModeEnum::LEARN) {
+            learnController.handleLearnRemote();
         }
         else if (!selectionContext.getIsFileRemoteSelected() && selectionContext.getCurrentSelectedMode() == SelectionModeEnum::FILES) {
             remoteController.handleFileRemoteSelection();

@@ -129,6 +129,13 @@ bool SdService::writeFile(const char* filePath, const std::string& data) {
     return false;
 }
 
+bool SdService::makeDir(const char* dirPath) {
+    if (!sdCardMounted) {
+        return false;
+    }
+    return SD.mkdir(dirPath);
+}
+
 bool SdService::appendToFile(const char* filePath, const std::string& data) {
     if (!sdCardMounted) {
         return false;
