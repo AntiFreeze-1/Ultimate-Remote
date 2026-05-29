@@ -17,11 +17,13 @@ FileRemoteCommand FileRemoteCommandSelection::select(const std::vector<FileRemot
 
     display.displayTopBar(remoteName, true);
 
+    if (commands.empty()) return emptyRemoteCommand;
+
     while (key != KEY_OK) {
 
         if (lastIndex != selectionIndex) {
             display.displaySelection(
-                commandNames, selectionIndex, 
+                commandNames, selectionIndex,
                 utils::StringUtils::convertCharVectorToStringVector(commandMappings)
             );
             lastIndex = selectionIndex;
@@ -34,27 +36,18 @@ FileRemoteCommand FileRemoteCommandSelection::select(const std::vector<FileRemot
                 break;
 
             case KEY_ARROW_DOWN:
-                if (selectionIndex < commands.size() - 1) {
-                    selectionIndex++;
-                } else {
-                    selectionIndex = 0;
-                }
+                selectionIndex = (selectionIndex < commands.size() - 1) ? selectionIndex + 1 : 0;
                 break;
 
             case KEY_ARROW_UP:
-                if (selectionIndex > 0) {
-                    selectionIndex--;
-                } else {
-                    selectionIndex = commands.size() - 1;
-                }
+                selectionIndex = (selectionIndex > 0) ? selectionIndex - 1 : (uint16_t)(commands.size() - 1);
                 break;
 
             case KEY_RETURN:
                 return emptyRemoteCommand;
 
             default:
-                // We check for keybinds
-                for (int i = 0; i < commandMappings.size() ; i++) {
+                for (int i = 0; i < (int)commandMappings.size(); i++) {
                     if (key == commandMappings[i]) {
                         return commands[i];
                     }

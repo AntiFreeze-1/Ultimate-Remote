@@ -30,10 +30,10 @@ void SdService::close() {
 
 bool SdService::isFile(const std::string filePath) {
     File f = SD.open(filePath.c_str());
-    if (f && !f.isDirectory()) {
-        return true;
-    }  
-    return false;     
+    if (!f) return false;
+    bool result = !f.isDirectory();
+    f.close();
+    return result;
 }
 
 bool SdService::getSdState() {

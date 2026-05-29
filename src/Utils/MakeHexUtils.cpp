@@ -36,7 +36,7 @@ std::vector<float> encodeRemoteCommand(const RemoteCommand& cmd, const char* pro
     if (cmd.subdevice >= 0)
         snprintf(irp, sizeof(irp), "Device=%d.%d\nFunction=%d\n", cmd.device, cmd.subdevice, cmd.function);
     else
-        snprintf(irp, sizeof(irp), "Device=%d\nFunction=%d\n", cmd.subdevice, cmd.function);
+        snprintf(irp, sizeof(irp), "Device=%d\nFunction=%d\n", cmd.device, cmd.function);
 
     // Protocol
     int p = -1;
