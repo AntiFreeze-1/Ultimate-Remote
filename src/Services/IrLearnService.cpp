@@ -23,18 +23,18 @@ LearnedSignal IrLearnService::capture(unsigned long timeoutMs) {
     unsigned long start = millis();
     while (millis() - start < timeoutMs) {
         if (IrReceiver.decode()) {
+            bool overflow = IrReceiver.decodedIRData.flags & IRDATA_FLAGS_WAS_OVERFLOW;
             uint16_t rawLen = IrReceiver.decodedIRData.rawlen;
-            // rawbuf[0] is the inter-signal gap — skip it; rest alternates mark/space in ticks
-            if (rawLen > 3) {
+            if (!overflow && rawLen >= 10) {
                 for (uint16_t i = 1; i < rawLen; i++) {
-                    // Convert ticks to microseconds (1 tick = MICROS_PER_TICK µs, typically 50)
                     uint32_t us = (uint32_t)IrReceiver.irparams.rawbuf[i] * MICROS_PER_TICK;
                     result.rawData.push_back(us > 65535 ? 65535 : (uint16_t)us);
                 }
                 result.valid = true;
+                IrReceiver.resume();
+                break;
             }
-            IrReceiver.resume();
-            break;
+            IrReceiver.resume(); // noise or overflow — keep waiting
         }
         delay(1);
     }

@@ -42,9 +42,6 @@ void LearnController::handleLearnRemote() {
         return;
     }
 
-    // Start IR receiver
-    irLearnService.begin();
-
     std::vector<LearnedButton> buttons;
 
     // Button capture loop
@@ -76,9 +73,6 @@ void LearnController::handleLearnRemote() {
             buttons.push_back(btn);
         }
     }
-
-    // Stop receiver before saving (frees timer resources)
-    irLearnService.stop();
 
     if (buttons.empty()) {
         sdService.close();

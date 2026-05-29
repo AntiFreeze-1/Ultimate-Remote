@@ -82,7 +82,9 @@ bool LearnSelection::captureButton(const std::string& buttonName, IrLearnService
     display.displayTopBar("Learn Remote", true);
     display.displayLearnCapturing(buttonName);
 
+    learnService.begin();
     LearnedSignal signal = learnService.capture(8000);
+    learnService.stop();
 
     if (!signal.valid) {
         // Show timeout UI — user can retry (any key) or skip (OK)
@@ -97,7 +99,9 @@ bool LearnSelection::captureButton(const std::string& buttonName, IrLearnService
         // retry
         display.displayTopBar("Learn Remote", true);
         display.displayLearnCapturing(buttonName);
+        learnService.begin();
         signal = learnService.capture(8000);
+        learnService.stop();
         if (!signal.valid) {
             return false;
         }
